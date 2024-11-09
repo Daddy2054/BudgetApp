@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0FD35FAA2CE0024200C29EE9 /* BudgetModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0FD35FA82CE0024200C29EE9 /* BudgetModel.xcdatamodeld */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		0FD35F7C2CDFFE8000C29EE9 /* Budget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budget.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FD35FA92CE0024200C29EE9 /* BudgetModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BudgetModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +37,7 @@
 		0FD35F732CDFFE8000C29EE9 = {
 			isa = PBXGroup;
 			children = (
+				0FD35FA82CE0024200C29EE9 /* BudgetModel.xcdatamodeld */,
 				0FD35F7E2CDFFE8000C29EE9 /* Budget */,
 				0FD35F7D2CDFFE8000C29EE9 /* Products */,
 			);
@@ -119,6 +125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FD35FAA2CE0024200C29EE9 /* BudgetModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,6 +331,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0FD35FA82CE0024200C29EE9 /* BudgetModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0FD35FA92CE0024200C29EE9 /* BudgetModel.xcdatamodel */,
+			);
+			currentVersion = 0FD35FA92CE0024200C29EE9 /* BudgetModel.xcdatamodel */;
+			path = BudgetModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 0FD35F742CDFFE8000C29EE9 /* Project object */;
 }
