@@ -16,7 +16,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0FD35F7E2CDFFE8000C29EE9 /* Budget */ = {
+		0FD35FC02CE003D600C29EE9 /* Budget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Budget;
 			sourceTree = "<group>";
@@ -38,8 +38,8 @@
 			isa = PBXGroup;
 			children = (
 				0FD35FA82CE0024200C29EE9 /* BudgetModel.xcdatamodeld */,
-				0FD35F7E2CDFFE8000C29EE9 /* Budget */,
 				0FD35F7D2CDFFE8000C29EE9 /* Products */,
+				0FD35FC02CE003D600C29EE9 /* Budget */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,7 +67,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				0FD35F7E2CDFFE8000C29EE9 /* Budget */,
+				0FD35FC02CE003D600C29EE9 /* Budget */,
 			);
 			name = Budget;
 			packageProductDependencies = (
