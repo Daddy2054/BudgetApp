@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BudgetDetailScreen: View {
     
+    @Environment(\.managedObjectContext)  private var context
     let budget: Budget
     
     
@@ -19,6 +20,21 @@ struct BudgetDetailScreen: View {
         !title.isEmptyOrWhitespace && amount != nil && Double(amount!) > 0
     }
     
+    private func addExpense() {
+        let expense = Expense(context: context)
+        expense.title = title
+        expense.amount = amount!
+        expense.dateCreated = Date()
+        
+        budget.addToExpenses(expense)
+        do {
+            try context.save()
+            title = ""
+            amount = nil
+        } catch {
+            print (error.localizedDescription)
+        }
+    }
     var body: some View {
         Form {
             Section ("New expense"){
