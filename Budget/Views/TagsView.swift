@@ -10,8 +10,8 @@ import SwiftUI
 struct TagsView: View {
     
     @FetchRequest(sortDescriptors: []) private var tags: FetchedResults<Tag>
-    @Binding
-    var selectedTag: Set<Tag>
+    @Binding var selectedTags: Set<Tag>
+    
     var body: some View {
         ScrollView(.horizontal,showsIndicators: false) {
             HStack{
@@ -19,13 +19,13 @@ struct TagsView: View {
                 ForEach(tags) { tag in
                     Text(tag.name ?? "")
                         .padding(10)
-                        .background(selectedTag.contains(tag) ? .blue : .gray)
+                        .background(selectedTags.contains(tag) ? .blue : .gray)
                         .clipShape(RoundedRectangle(cornerRadius: 16.0,style: .continuous))
                         .onTapGesture {
-                            if selectedTag.contains(tag) {
-                                selectedTag.remove(tag)
+                            if selectedTags.contains(tag) {
+                                selectedTags.remove(tag)
                             }else {
-                                selectedTag.insert(tag)
+                                selectedTags.insert(tag)
                             }
                         }
                 }
@@ -37,9 +37,9 @@ struct TagsView: View {
 
 struct TagsViewContainerView: View {
     
-    @State var selectedTag: Set<Tag> = []
+    @State var selectedTags: Set<Tag> = []
     var  body: some View {
-        TagsView(selectedTag: $selectedTag)
+        TagsView(selectedTags: $selectedTags)
             .environment(\.managedObjectContext, CoreDataProvider.preview.context)
         
     }
