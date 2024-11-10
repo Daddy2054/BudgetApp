@@ -23,6 +23,11 @@ class CoreDataProvider {
         entertainment.limit = 500
         entertainment.dateCreated = Date()
         
+        let groceries = Budget(context: context)
+        groceries.title = "Groceries"
+        groceries.limit = 200
+        groceries.dateCreated = Date()
+        
         do {
             try context.save()
         } catch {
