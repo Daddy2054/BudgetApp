@@ -22,6 +22,33 @@ struct FilterScreen: View {
     @State private var startDate = Date()
     @State private var endDate = Date()
     
+    @State private var selectedSortOption: SortOptions? = nil
+    
+    private enum SortOptions: CaseIterable, Identifiable {
+        case title
+        case date
+        case amount
+        
+        var id: Self { self }
+        
+        var title: String {
+            switch self {
+            case .title: return "Title"
+            case .date: return "Date"
+            case .amount: return "Amount"
+            }
+        }
+        
+        var key: String {
+            switch self {
+            case .title: return "title"
+            case .date: return "dateCreated"
+            case .amount: return "amount"
+            }
+        }
+
+    }
+    
     private func filterTags() {
         if selectedTags.isEmpty {
             return
@@ -70,8 +97,34 @@ struct FilterScreen: View {
             print(error)
         }
     }
+    
+    private func performSort() {
+        guard let sortOption = selectedSortOption else {
+            return
+        }
+        let request = Expense.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: sortOption.key, ascending: true)]
+        do {
+            filteredExpenses = try context.fetch(request)
+        } catch {
+            print(error)
+        }
+    }
     var body: some View {
         List{
+            
+            Section("Sort") {
+                Picker("Sort Options", selection: $selectedSortOption
+                ) {
+                    Text("Select").tag(Optional<SortOptions>(nil))
+                    ForEach(SortOptions.allCases) { sortOption in
+                        Text(sortOption.title).tag(Optional(sortOption))
+                    }
+                    
+                }
+                .onChange(of: selectedSortOption, performSort)
+            }
+            
             Section("Filter by Tags") {
                 TagsView(selectedTags: $selectedTags)
                     .onChange(of: selectedTags, filterTags)
@@ -98,10 +151,12 @@ struct FilterScreen: View {
             }
             }
             
-            ForEach(filteredExpenses) { expense in
-                ExpenseCellView(expense: expense)
+            Section("Expenses") {
+                ForEach(filteredExpenses) { expense in
+                    ExpenseCellView(expense: expense)
+                }
             }
-            Spacer()
+      
             HStack {
                 Spacer()
                 
