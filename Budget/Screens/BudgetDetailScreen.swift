@@ -23,20 +23,8 @@ struct BudgetDetailScreen: View {
         _expenses = FetchRequest( sortDescriptors: [], predicate: NSPredicate(format: "budget == %@", budget))
     }
     
-    
     private var isFormValid: Bool {
         !title.isEmptyOrWhitespace && amount != nil && Double(amount!) > 0 && selectedTags.count > 0
-    }
-    
-    private var total: Double {
-        return expenses.reduce(0) { result, expense in
-            expense.amount + result
-        }
-    }
-    
-    private var remaining: Double {
-        return budget.limit - total
-        
     }
     
     private func addExpense() {
@@ -96,15 +84,15 @@ struct BudgetDetailScreen: View {
                     VStack {
                         HStack {
                             Spacer()
-                            Text("Total")
-                            Text(total, format: .currency(code: Locale.currencyCode))
+                            Text("Spent")
+                            Text(budget.spent, format: .currency(code: Locale.currencyCode))
                             Spacer()
                         }
                         HStack {
                             Spacer()
                             Text("Remaining")
-                            Text(remaining, format: .currency(code: Locale.currencyCode))
-                                .foregroundStyle(remaining < 0 ? .red: .green)
+                            Text(budget.remaining, format: .currency(code: Locale.currencyCode))
+                                .foregroundStyle(budget.remaining < 0 ? .red: .green)
                             Spacer()
                         }
                     }
@@ -117,7 +105,7 @@ struct BudgetDetailScreen: View {
     }
 }
 struct BudgetDetailScreenContainer: View {
-
+    
     @FetchRequest(sortDescriptors: []   ) private var budgets: FetchedResults<Budget>
     
     var body: some View {
