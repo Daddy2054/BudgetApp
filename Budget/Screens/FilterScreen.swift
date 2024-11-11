@@ -18,6 +18,7 @@ struct FilterScreen: View {
     
     @State private var startPrice: Double?
     @State private var endPrice: Double?
+    @State private var title: String = ""
     
     private func filterTags() {
         if selectedTags.isEmpty {
@@ -46,6 +47,17 @@ struct FilterScreen: View {
             print(error)
         }
     }
+    
+    private func filterByTitle() {
+        let request = Expense.fetchRequest()
+        request.predicate = NSPredicate(format: "title CONTAINS[c] %@", title)
+        do {
+            filteredExpenses = try context.fetch(request)
+        } catch {
+            print(error)
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 20){
             Section("Filter by Tags") {
@@ -58,6 +70,12 @@ struct FilterScreen: View {
                 Button("Search"){
                     filterByPrice()
                 }
+            }
+            Section("Filter by Title") {
+                TextField("Title", text: $title)
+            Button("Search"){
+                filterByTitle()
+            }
             }
             List(filteredExpenses) { expense in
                 ExpenseCellView(expense: expense)
