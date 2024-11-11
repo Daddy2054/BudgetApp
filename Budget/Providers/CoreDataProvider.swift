@@ -51,6 +51,9 @@ class CoreDataProvider {
             {
                 cookie.addToTags(tag)
             }
+            if let tagName = tag.name, ["Health"].contains(tagName) {
+                milk.addToTags(tag)
+            }
     
         }
         
