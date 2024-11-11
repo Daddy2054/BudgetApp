@@ -19,6 +19,8 @@ struct FilterScreen: View {
     @State private var startPrice: Double?
     @State private var endPrice: Double?
     @State private var title: String = ""
+    @State private var startDate = Date()
+    @State private var endDate = Date()
     
     private func filterTags() {
         if selectedTags.isEmpty {
@@ -58,8 +60,18 @@ struct FilterScreen: View {
         }
     }
     
+    private func filterByDate() {
+        let request = Expense.fetchRequest()
+        request.predicate = NSPredicate(format: "dateCreated >= %@ AND dateCreated <= %@", startDate as NSDate
+                                        , endDate as NSDate)
+        do {
+            filteredExpenses = try context.fetch(request)
+        } catch {
+            print(error)
+        }
+    }
     var body: some View {
-        VStack(alignment: .leading, spacing: 20){
+        List{
             Section("Filter by Tags") {
                 TagsView(selectedTags: $selectedTags)
                     .onChange(of: selectedTags, filterTags)
@@ -77,7 +89,16 @@ struct FilterScreen: View {
                 filterByTitle()
             }
             }
-            List(filteredExpenses) { expense in
+            
+            Section("Filter by Date") {
+                DatePicker("Start date", selection: $startDate, displayedComponents: .date)
+                DatePicker("End date", selection: $endDate, displayedComponents: .date)
+            Button("Search"){
+                filterByDate()
+            }
+            }
+            
+            ForEach(filteredExpenses) { expense in
                 ExpenseCellView(expense: expense)
             }
             Spacer()
