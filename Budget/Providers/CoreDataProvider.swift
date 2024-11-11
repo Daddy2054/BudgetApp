@@ -40,13 +40,18 @@ class CoreDataProvider {
         
         groceries.addToExpenses(milk)
         groceries.addToExpenses(cookie)
-
+        
         // insert tags
         let commonTags = ["Food", "Dining", "Travel", "Entertainment", "Shopping", "Health", "Utilities", "Transportation", "Other"]
         
         for commonTag in commonTags {
             let tag = Tag(context: context)
             tag.name = commonTag
+            if let tagName = tag.name,  ["Food", "Shopping"].contains(tagName)
+            {
+                cookie.addToTags(tag)
+            }
+    
         }
         
         do {
