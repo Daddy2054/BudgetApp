@@ -23,6 +23,21 @@ struct FilterScreen: View {
     @State private var endDate = Date()
     
     @State private var selectedSortOption: SortOptions? = nil
+    @State private var selectedSortDirection: SortDirection? = .ascending
+    
+    private enum SortDirection: CaseIterable, Identifiable {
+        case ascending
+        case descending
+        
+        var id: Self { self }
+        
+        var title: String {
+            switch self {
+            case .ascending: return "Ascending"
+            case .descending: return "Descending"
+            }
+        }
+    }
     
     private enum SortOptions: CaseIterable, Identifiable {
         case title
@@ -103,7 +118,7 @@ struct FilterScreen: View {
             return
         }
         let request = Expense.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: sortOption.key, ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(key: sortOption.key, ascending: selectedSortDirection == .ascending ? true : false)]
         do {
             filteredExpenses = try context.fetch(request)
         } catch {
@@ -120,11 +135,19 @@ struct FilterScreen: View {
                     ForEach(SortOptions.allCases) { sortOption in
                         Text(sortOption.title).tag(Optional(sortOption))
                     }
-                    
                 }
-                .onChange(of: selectedSortOption, performSort)
-            }
             
+                Picker("Sort Direction", selection: $selectedSortDirection) {
+                    ForEach(SortDirection.allCases) { sortDirection in
+                        Text(sortDirection.title).tag(Optional(sortDirection))
+                    }
+                }
+                Button("Sort"){
+                    performSort()
+                }
+                .buttonStyle(.borderless)
+            }
+
             Section("Filter by Tags") {
                 TagsView(selectedTags: $selectedTags)
                     .onChange(of: selectedTags, filterTags)
