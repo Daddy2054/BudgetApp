@@ -43,8 +43,10 @@ struct BudgetDetailScreen: View {
             title = ""
             amount = nil
             quantity = nil
+            selectedTags = []
             
         } catch {
+            context.rollback()
             print (error.localizedDescription)
         }
     }
