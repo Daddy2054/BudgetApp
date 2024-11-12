@@ -20,21 +20,25 @@ struct BudgetApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            BudgetListScreen()
-                .onAppear{
-                    let hasSeededData = UserDefaults.standard.bool(forKey: "hasSeedData")
-                    if !hasSeededData {
-                        let commonTags = ["Food", "Dining", "Travel", "Entertainment", "Shopping", "Health", "Utilities", "Transportation", "Other"]
-                        do {
-                            try tagsSeeder.seed( commonTags)
-                            UserDefaults.standard.setValue(true, forKey: "hasSeedData")
-                        } catch {
-                            print("Error seeding tags: \(error)")
+            NavigationStack {
+                
+                
+                BudgetListScreen()
+                    .onAppear{
+                        let hasSeededData = UserDefaults.standard.bool(forKey: "hasSeedData")
+                        if !hasSeededData {
+                            let commonTags = ["Food", "Dining", "Travel", "Entertainment", "Shopping", "Health", "Utilities", "Transportation", "Other"]
+                            do {
+                                try tagsSeeder.seed( commonTags)
+                                UserDefaults.standard.setValue(true, forKey: "hasSeedData")
+                            } catch {
+                                print("Error seeding tags: \(error)")
+                            }
                         }
-                                 }
-                    
-                }
-                .environment(\.managedObjectContext, provider.context)
+                        
+                    }
+            }
+            .environment(\.managedObjectContext, provider.context)
         }
     }
 }
