@@ -11,6 +11,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F540D602CE382EE00DE4EA8 /* BudgetModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "BudgetModel 2.xcdatamodel"; sourceTree = "<group>"; };
 		0FD35F7C2CDFFE8000C29EE9 /* Budget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budget.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FD35FA92CE0024200C29EE9 /* BudgetModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BudgetModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -336,6 +337,7 @@
 		0FD35FA82CE0024200C29EE9 /* BudgetModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				0F540D602CE382EE00DE4EA8 /* BudgetModel 2.xcdatamodel */,
 				0FD35FA92CE0024200C29EE9 /* BudgetModel.xcdatamodel */,
 			);
 			currentVersion = 0FD35FA92CE0024200C29EE9 /* BudgetModel.xcdatamodel */;
