@@ -16,7 +16,8 @@ struct BudgetDetailScreen: View {
     @State private var title: String = ""
     @State private var amount: Double?
     @State private var quantity: Int?
-    
+
+    @State private var expenseToEdit: Expense?
     @State private var selectedTags: Set<Tag> = []
     
     @FetchRequest(sortDescriptors: []) private var expenses: FetchedResults<Expense>
@@ -107,9 +108,19 @@ struct BudgetDetailScreen: View {
                     ForEach(expenses) {
                         expense in
                         ExpenseCellView(expense: expense)
+                            .onLongPressGesture {
+                                expenseToEdit = expense
+                            }
                     }.onDelete(perform: deleteExpense)                }
             }
-        }.navigationTitle( budget.title ?? "")
+        }
+        .navigationTitle( budget.title ?? "")
+        .sheet(item: $expenseToEdit) { expensesToEdit in
+            NavigationStack {
+                EditExpenseScreen(expense: expensesToEdit)
+            }
+             //   .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }
 struct BudgetDetailScreenContainer: View {
