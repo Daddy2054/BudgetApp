@@ -5,31 +5,26 @@
 //  Created by Jean on 12/11/24.
 //
 
+
 import SwiftUI
 
 struct EditExpenseScreen: View {
+    
     @Environment(\.managedObjectContext) private var context
     @Environment(\.dismiss) private var dismiss
-    
+   
     @ObservedObject var expense: Expense
+    let onUpdate: () -> Void
     
-//    @State private var expenseTitle: String = ""
-//    @State private var expenseAmount: Double?
-//    @State private var expenseQuantity: Int = 0
-//    @State private var expenseSelectedTags: Set<Tag> = []
-//    
     private func updateExpense() {
-//        expense.title = expenseTitle
-//        expense.amount = expenseAmount ?? 0.0
-//        expense.quantity = Int16(expenseQuantity)
-//        expense.tags = NSSet(array: Array(expenseSelectedTags))
-//        
+        
         do {
             try context.save()
-            dismiss()
+            onUpdate()
         } catch {
-            print("Error saving expense: \(error)")
+            print(error)
         }
+        
     }
     
     var body: some View {
@@ -47,15 +42,7 @@ struct EditExpenseScreen: View {
                 expense.tags = NSSet(array: Array(newValue))
             }))
         }
-        .onAppear(perform: {
-            /*
-            expenseTitle = expense.title ?? ""
-            expenseAmount = expense.amount
-            expenseQuantity = Int(expense.quantity)
-            if let tags = expense.tags {
-                expenseSelectedTags = Set(tags.compactMap { $0 as? Tag })
-            } */
-        })
+        
         .toolbar(content: {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Update") {
@@ -67,18 +54,18 @@ struct EditExpenseScreen: View {
     }
 }
 
-
-struct EditExpenseContaiinerView: View {
+struct EditExpenseContainerView: View {
     
     @FetchRequest(sortDescriptors: []) private var expenses: FetchedResults<Expense>
     
     var body: some View {
         NavigationStack {
-            EditExpenseScreen(expense: expenses.first!)
+            EditExpenseScreen(expense: expenses[0], onUpdate: { })
         }
     }
 }
+
 #Preview {
-    EditExpenseContaiinerView()
+    EditExpenseContainerView()
         .environment(\.managedObjectContext, CoreDataProvider.preview.context)
 }
